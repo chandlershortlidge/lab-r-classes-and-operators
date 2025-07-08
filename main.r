@@ -67,3 +67,19 @@ circle2
 
 # test intersection
 circle1 %>% circle2  # TRUE, since distance 5 ≤ 3+4
+# 1. Define a generic circumference function
+circumference <- function(x, ...) {
+  UseMethod("circumference")
+}
+
+# 2. Implement the Circle method
+circumference.Circle <- function(x, ...) {
+  # x is a Circle object
+  r <- x$radius
+  2 * pi * r
+}
+
+# — Example usage —
+my_circle <- Circle(radius = 5)
+circumference(my_circle)  
+#> [1] 31.41593
