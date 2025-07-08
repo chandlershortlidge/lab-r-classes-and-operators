@@ -83,3 +83,46 @@ circumference.Circle <- function(x, ...) {
 my_circle <- Circle(radius = 5)
 circumference(my_circle)  
 #> [1] 31.41593
+# 1. Define the S4 class
+setClass(
+  "Rectangle",
+  slots = c(
+    length = "numeric",
+    width  = "numeric"
+  ),
+  prototype = list(
+    length = 1,
+    width  = 1
+  ),
+  validity = function(object) {
+    if (object@length <= 0 || object@width <= 0) {
+      return("length and width must be positive numbers")
+    }
+    TRUE
+  }
+)
+
+# 2. Constructor function
+Rectangle <- function(length, width) {
+  new("Rectangle", length = length, width = width)
+}
+
+# 3. show() method
+setMethod(
+  "show",
+  "Rectangle",
+  function(object) {
+    area <- object@length * object@width
+    cat("Rectangle object\n")
+    cat(" • Length:", object@length, "\n")
+    cat(" • Width: ", object@width,  "\n")
+    cat(" • Area:  ", area,          "\n")
+    invisible(object)
+  }
+)
+
+# — Example usage —
+my_rectangle <- Rectangle(length = 4, width = 6)
+show(my_rectangle)
+# or simply:
+my_rectangle
