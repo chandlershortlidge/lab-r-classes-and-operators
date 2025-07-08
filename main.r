@@ -126,3 +126,26 @@ my_rectangle <- Rectangle(length = 4, width = 6)
 show(my_rectangle)
 # or simply:
 my_rectangle
+
+# 1. Define the generic infix operator %==%
+setGeneric(
+  "%==%",
+  function(e1, e2) standardGeneric("%==%")
+)
+
+# 2. Define the method for two Rectangle objects
+setMethod(
+  "%==%",
+  signature(e1 = "Rectangle", e2 = "Rectangle"),
+  function(e1, e2) {
+    area1 <- e1@length * e1@width
+    area2 <- e2@length * e2@width
+    return(area1 == area2)
+  }
+)
+
+# — Example usage —
+rectangle1 <- Rectangle(length = 4, width = 6)
+rectangle2 <- Rectangle(length = 3, width = 8)
+
+rectangle1 %==% rectangle2  # TRUE, since both have area 24
